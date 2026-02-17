@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contacto</title><link rel="stylesheet" href="/styles.css"></head><body>
+<header><div class="container nav"><p class="brand">GNM Tour</p><ul><li><a href="/index.html">Inicio</a></li><li><a href="/nosotros.html">Nosotros</a></li><li><a href="/reservar-viaje.html">Reservar Viaje</a></li><li><a href="/reservar-quincho.html">Reservar Quincho/Salón</a></li><li><a href="/contacto.html">Contacto</a></li></ul></div></header>
+<section class="section"><div class="container"><h1>Contacto</h1><form id="contactForm"><label>Nombre</label><input id="name" required><label>Email</label><input id="email" type="email" required><label>Mensaje</label><textarea id="message" rows="5" required></textarea><button class="btn" type="submit">Enviar</button><p class="message" id="contactMsg"></p></form></div></section>
+<script src="/app.js"></script><script>
+document.getElementById('contactForm').addEventListener('submit', async (e)=>{e.preventDefault();
+ const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name.value,email:email.value,message:message.value})});
+ const data=await res.json(); showMessage(contactMsg,data.message,res.ok); if(res.ok)e.target.reset();
+});
+</script>
+<footer><div class="container">GNM Tour</div></footer><a class="whatsapp-btn" href="https://wa.me/5491100000000" target="_blank">WhatsApp Admin</a>
+</body></html>
