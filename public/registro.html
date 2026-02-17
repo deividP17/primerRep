@@ -1,0 +1,13 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Registro</title><link rel="stylesheet" href="/styles.css"></head><body>
+<header><div class="container nav"><p class="brand">GNM Tour</p><ul><li><a href="/index.html">Inicio</a></li><li><a href="/registro.html">Registro</a></li><li><a href="/login.html">Login</a></li></ul></div></header>
+<section class="section"><div class="container"><h1>Registro de cliente</h1><form id="registerForm"><label>Nombre completo</label><input id="fullName" required><label>Email</label><input id="email" type="email" required><label>Fecha de nacimiento</label><input id="birthDate" type="date" required><div class="row"><div><label>Contraseña</label><input id="password" type="password" minlength="8" required></div><div><label>Repetir contraseña</label><input id="confirmPassword" type="password" minlength="8" required></div></div><button class="btn" type="submit">Crear cuenta</button><p class="message" id="registerMsg"></p></form></div></section>
+<script src="/app.js"></script><script>
+registerForm.addEventListener('submit', async (e)=>{e.preventDefault();
+ if(password.value!==confirmPassword.value){return showMessage(registerMsg,'Las contraseñas no coinciden.',false);}
+ const body={fullName:fullName.value,email:email.value,birthDate:birthDate.value,password:password.value,confirmPassword:confirmPassword.value};
+ const res=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const data=await res.json(); showMessage(registerMsg,data.message,res.ok); if(res.ok)e.target.reset();
+});
+</script>
+<footer><div class="container">GNM Tour</div></footer>
+</body></html>

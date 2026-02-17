@@ -1,0 +1,12 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Login</title><link rel="stylesheet" href="/styles.css"></head><body>
+<header><div class="container nav"><p class="brand">GNM Tour</p><ul><li><a href="/index.html">Inicio</a></li><li><a href="/registro.html">Registro</a></li><li><a href="/login.html">Login</a></li><li><a href="/admin.html">Admin</a></li></ul></div></header>
+<section class="section"><div class="container"><h1>Iniciar sesión</h1><form id="loginForm"><label>Email</label><input id="email" type="email" required><label>Contraseña</label><input id="password" type="password" required><button class="btn" type="submit">Ingresar</button><p class="message" id="loginMsg"></p></form></div></section>
+<script src="/app.js"></script><script>
+loginForm.addEventListener('submit', async (e)=>{e.preventDefault();
+ const res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email.value,password:password.value})});
+ const data=await res.json(); showMessage(loginMsg,data.message,res.ok);
+ if(res.ok){ localStorage.setItem('gnmUser',JSON.stringify(data.user)); if(data.user.role==='admin'){location.href='/admin.html';}}
+});
+</script>
+<footer><div class="container">GNM Tour</div></footer>
+</body></html>

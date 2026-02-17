@@ -1,0 +1,17 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reservar Viaje</title><link rel="stylesheet" href="/styles.css"></head><body>
+<header><div class="container nav"><p class="brand">GNM Tour</p><ul><li><a href="/index.html">Inicio</a></li><li><a href="/nosotros.html">Nosotros</a></li><li><a href="/reservar-viaje.html">Reservar Viaje</a></li><li><a href="/reservar-quincho.html">Reservar Quincho/Salón</a></li><li><a href="/contacto.html">Contacto</a></li></ul></div></header>
+<section class="section"><div class="container"><h1>Próximos viajes</h1><div class="grid" id="tripCards"></div></div></section>
+<section class="section"><div class="container"><h2>Reservar viaje</h2><form id="tripForm"><label>Viaje</label><select id="tripId" required></select><div class="row"><div><label>Cantidad de pasajeros</label><input type="number" id="passengers" min="1" required></div><div><label>Método de pago</label><select id="paymentMethod" required><option value="">Seleccionar...</option><option value="mercadopago">Mercado Pago</option><option value="transferencia">Transferencia</option><option value="debito">Tarjeta de débito</option><option value="credito">Tarjeta de crédito</option></select></div></div><button class="btn" type="submit">Reservar viaje</button><p class="message" id="tripMsg"></p></form></div></section>
+<script src="/app.js"></script>
+<script>
+loadTrips('tripCards','tripId');
+document.getElementById('tripForm').addEventListener('submit', async (e)=>{
+ e.preventDefault(); const user=getCurrentUser(); const msg=document.getElementById('tripMsg');
+ if(!user){ return showMessage(msg,'Necesitás iniciar sesión para reservar.',false);} 
+ const body={ userId:user.id, tripId:document.getElementById('tripId').value, passengers:Number(document.getElementById('passengers').value), paymentMethod:document.getElementById('paymentMethod').value };
+ const res=await fetch('/api/bookings/trip',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const data=await res.json(); showMessage(msg,data.message,res.ok);
+});
+</script>
+<footer><div class="container">GNM Tour</div></footer><a class="whatsapp-btn" href="https://wa.me/5491100000000" target="_blank">WhatsApp Admin</a>
+</body></html>

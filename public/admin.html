@@ -1,0 +1,12 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Panel Admin</title><link rel="stylesheet" href="/styles.css"></head><body>
+<header><div class="container nav"><p class="brand">GNM Tour Admin</p><ul><li><a href="/index.html">Inicio</a></li><li><a href="/admin.html">Panel</a></li></ul></div></header>
+<section class="section"><div class="container"><h1>Visual de Administrador</h1><div class="grid"><div class="card"><p>Usuarios</p><p class="stat" id="users">0</p></div><div class="card"><p>Reservas viajes</p><p class="stat" id="tripBookings">0</p></div><div class="card"><p>Reservas quincho/salón</p><p class="stat" id="venueBookings">0</p></div></div><h2>Últimos mensajes de contacto</h2><div id="messages" class="grid"></div></div></section>
+<script>
+(async()=>{const res=await fetch('/api/admin/summary'); const data=await res.json();
+ if(!res.ok){document.getElementById('messages').innerHTML='<p>Error cargando panel.</p>'; return;}
+ users.textContent=data.totals.users; tripBookings.textContent=data.totals.tripBookings; venueBookings.textContent=data.totals.venueBookings;
+ messages.innerHTML=data.recentMessages.map(m=>`<article class='card'><strong>${m.name}</strong><p>${m.email}</p><p>${m.message}</p></article>`).join('');
+})();
+</script>
+<footer><div class="container">GNM Tour</div></footer>
+</body></html>
